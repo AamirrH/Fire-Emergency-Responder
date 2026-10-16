@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10151b"><title>Ember · Fire Command</title>
+  <link rel="stylesheet" href="/styles.css"><script src="/map.js" defer></script><script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/" aria-label="Ember fire command"><span class="brand-mark">E</span><span>EMBER <small>FIRE COMMAND</small></span></a><div class="topbar-right"><span id="connection" class="connection">Connecting…</span><button id="share-button">Open on phone</button></div></header>
+  <main>
+    <div id="stale-banner" class="stale-banner" role="alert" hidden>LIVE FEED LOST — positions may be out of date. Last update <span id="stale-age">—</span>.</div>
+    <section class="incident-heading"><div><p class="eyebrow">BUILDING 01 · GROUND-LEVEL COMMAND</p><h1 id="incident-title">Connecting to building…</h1><p id="incident-note">Waiting for live occupant information.</p></div><span class="demo-badge">SIMULATION</span></section>
+    <section class="metrics" aria-label="Building status">
+      <button id="sos-metric" class="metric sos"><strong id="active_sos">—</strong><span>Active SOS</span></button>
+      <button id="lost-metric" class="metric lost"><strong id="heartbeat_lost">—</strong><span>Signal lost</span></button>
+      <button id="unaccounted-metric" class="metric missing"><strong id="unaccounted">—</strong><span>Unaccounted</span></button>
+      <div class="metric safe"><strong id="safe">—</strong><span>Confirmed safe <small>of <span id="expected">—</span> expected</small></span></div>
+    </section>
+    <div class="command-layout">
+      <nav class="floor-nav" aria-label="Select floor"><h2>Floors</h2><div id="floors"></div><button id="unlocated-tab" class="unlocated-tab">Unknown floor <b id="unlocated-count">—</b></button></nav>
+      <section class="map-panel" aria-labelledby="floor-title"><div class="panel-heading"><div><h2 id="floor-title">Floor 1</h2><p id="floor-subtitle">Estimated locations</p></div><label class="toggle"><input id="show-all" type="checkbox">Show everyone</label></div>
+        <div id="ap-banner" class="coverage-banner" hidden></div>
+        <div id="unknown-banner" class="unknown-banner" hidden><strong>No floor established</strong><p>These occupants have not provided enough location information.</p></div>
+        <div id="map-wrap"><svg id="map" viewBox="-1 -1 22 22" role="img" aria-label="Room map with SOS and lost-signal occupant locations"></svg><div class="map-legend"><span class="legend-sos">! SOS</span><span class="legend-lost">? Last known location</span><span class="legend-active">● Other occupants</span></div><p class="map-note">Locations are estimates · illustrative room layout</p></div>
+        <div id="selected-person" class="selected-person" hidden></div>
+        <div id="unknown-list"></div>
+      </section>
+      <aside class="attention-panel"><div class="attention-heading"><h2>Needs attention</h2><span id="attention-count">—</span></div><div id="attention-list"></div><button id="all-alerts" hidden>Show all alerts</button><div class="unknown-summary"><strong id="unknown-summary-count">— unaccounted</strong><span>No signal received. Location unknown.</span><button id="review-unaccounted">View roster</button></div><div class="qr-card"><img id="station-qr" alt="Scan to open the live dashboard on your phone" hidden><div><strong>Take this view with you</strong><p id="qr-status">Preparing phone link…</p><button id="qr-open">Show QR code</button></div></div></aside>
+    </div>
+    <details class="secondary-panel" id="technical"><summary>Occupant roster & sensor details <span id="updated">Waiting for data</span></summary><div class="table-scroll"><table><thead><tr><th>Occupant</th><th>Status</th><th>Estimated floor / position</th><th>Last signal</th><th>Connected AP</th><th>Match distance</th></tr></thead><tbody id="devices"></tbody></table></div></details>
+    <details class="secondary-panel" id="demo-controls" hidden><summary>Demo controls</summary><div class="control-fields"><label>Occupant<select id="device-select"></select></label><div class="button-row"><button data-action="sos" class="danger">Send SOS</button><button data-action="go-silent">Go silent</button><button data-action="evacuate">Confirm safe</button></div><label>Access point<select id="ap-select"></select></label><div class="button-row"><button data-action="ap-down">AP offline</button><button data-action="power-outage">Floor outage</button><button data-action="reset">Reset demo</button></div></div><p id="control-message" role="status">Demo actions apply to every connected view.</p></details>
+    <footer><span>Prototype · simulated occupants</span><span id="sync-note">Live incident view</span></footer>
+  </main>
+  <dialog id="share-dialog" aria-labelledby="share-title"><div class="dialog-heading"><h2 id="share-title">Live view on your phone</h2><button id="close-share" aria-label="Close phone sharing">✕</button></div><p id="share-description">Scan with your phone camera. No app needed.</p><img id="share-qr" alt="QR code for the live dashboard" hidden><a id="share-link" target="_blank" rel="noopener" hidden></a><button id="copy-link" hidden>Copy link</button><p id="share-message" role="status"></p><p class="share-footnote">The command station must stay online to send live updates.</p></dialog>
+</body>
+</html>

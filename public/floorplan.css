@@ -1,0 +1,7 @@
+.plan-viewport { overflow-x: auto; margin: 12px 0; }
+#map { min-width: 420px; height: 480px; }
+.room-label { fill: #dae5eb; font-weight: 600; }
+.room-number { fill: #90a9b9; letter-spacing: .045px; }
+.corridor-label { fill: #9bb7c5; letter-spacing: .1px; }
+.plan-note { color: var(--muted); text-align: center; font-size: 10px; margin: 16px 0 0; }
+@media (max-width: 650px) { #map { height: 420px; } }

@@ -1,0 +1,784 @@
+{
+  "floors": 6,
+  "floor_height_m": 4,
+  "grid_size_m": 20,
+  "reference_pressure_pa": 101325,
+  "aps": [
+    {
+      "id": "AP-1",
+      "floor": 1,
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "AP-2",
+      "floor": 1,
+      "x": 18,
+      "y": 2
+    },
+    {
+      "id": "AP-3",
+      "floor": 1,
+      "x": 10,
+      "y": 18
+    },
+    {
+      "id": "AP-4",
+      "floor": 2,
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "AP-5",
+      "floor": 2,
+      "x": 18,
+      "y": 2
+    },
+    {
+      "id": "AP-6",
+      "floor": 2,
+      "x": 10,
+      "y": 18
+    },
+    {
+      "id": "AP-7",
+      "floor": 3,
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "AP-8",
+      "floor": 3,
+      "x": 18,
+      "y": 2
+    },
+    {
+      "id": "AP-9",
+      "floor": 3,
+      "x": 10,
+      "y": 18
+    },
+    {
+      "id": "AP-10",
+      "floor": 4,
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "AP-11",
+      "floor": 4,
+      "x": 18,
+      "y": 2
+    },
+    {
+      "id": "AP-12",
+      "floor": 4,
+      "x": 10,
+      "y": 18
+    },
+    {
+      "id": "AP-13",
+      "floor": 5,
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "AP-14",
+      "floor": 5,
+      "x": 18,
+      "y": 2
+    },
+    {
+      "id": "AP-15",
+      "floor": 5,
+      "x": 10,
+      "y": 18
+    },
+    {
+      "id": "AP-16",
+      "floor": 6,
+      "x": 2,
+      "y": 2
+    },
+    {
+      "id": "AP-17",
+      "floor": 6,
+      "x": 18,
+      "y": 2
+    },
+    {
+      "id": "AP-18",
+      "floor": 6,
+      "x": 10,
+      "y": 18
+    }
+  ],
+  "floor_plans": [
+    {
+      "floor": 1,
+      "name": "Reception & visitor services",
+      "corridor": {
+        "x": 0,
+        "y": 8,
+        "width": 20,
+        "height": 4,
+        "label": "MAIN CORRIDOR"
+      },
+      "rooms": [
+        {
+          "id": "101",
+          "kind": "stairs",
+          "label": "Stair A",
+          "x": 0,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 2,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "102",
+          "kind": "room",
+          "label": "Reception",
+          "x": 4,
+          "y": 12,
+          "width": 6,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 7,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "103",
+          "kind": "room",
+          "label": "Security",
+          "x": 10,
+          "y": 12,
+          "width": 6,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 13,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "104",
+          "kind": "restroom",
+          "label": "Restrooms",
+          "x": 16,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 18,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "105",
+          "kind": "room",
+          "label": "Visitor lounge",
+          "x": 0,
+          "y": 0,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 3.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "106",
+          "kind": "room",
+          "label": "First aid",
+          "x": 7,
+          "y": 0,
+          "width": 9,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 11.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "107",
+          "kind": "stairs",
+          "label": "Stair B",
+          "x": 16,
+          "y": 0,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 18,
+            "width": 1.2
+          }
+        }
+      ]
+    },
+    {
+      "floor": 2,
+      "name": "Workspaces",
+      "corridor": {
+        "x": 0,
+        "y": 8,
+        "width": 20,
+        "height": 4,
+        "label": "MAIN CORRIDOR"
+      },
+      "rooms": [
+        {
+          "id": "201",
+          "kind": "stairs",
+          "label": "Stair A",
+          "x": 0,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 2,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "202",
+          "kind": "room",
+          "label": "Open office",
+          "x": 4,
+          "y": 12,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 7.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "203",
+          "kind": "room",
+          "label": "Meeting room",
+          "x": 11,
+          "y": 12,
+          "width": 5,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 13.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "204",
+          "kind": "restroom",
+          "label": "Restrooms",
+          "x": 16,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 18,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "205",
+          "kind": "room",
+          "label": "Project studio",
+          "x": 0,
+          "y": 0,
+          "width": 9,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 4.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "206",
+          "kind": "room",
+          "label": "Break room",
+          "x": 9,
+          "y": 0,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 12.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "207",
+          "kind": "stairs",
+          "label": "Stair B",
+          "x": 16,
+          "y": 0,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 18,
+            "width": 1.2
+          }
+        }
+      ]
+    },
+    {
+      "floor": 3,
+      "name": "Learning & training",
+      "corridor": {
+        "x": 0,
+        "y": 8,
+        "width": 20,
+        "height": 4,
+        "label": "MAIN CORRIDOR"
+      },
+      "rooms": [
+        {
+          "id": "301",
+          "kind": "stairs",
+          "label": "Stair A",
+          "x": 0,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 2,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "302",
+          "kind": "room",
+          "label": "Classroom A",
+          "x": 4,
+          "y": 12,
+          "width": 6,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 7,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "303",
+          "kind": "room",
+          "label": "Classroom B",
+          "x": 10,
+          "y": 12,
+          "width": 6,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 13,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "304",
+          "kind": "restroom",
+          "label": "Restrooms",
+          "x": 16,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 18,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "305",
+          "kind": "room",
+          "label": "Training lab",
+          "x": 0,
+          "y": 0,
+          "width": 9,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 4.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "306",
+          "kind": "room",
+          "label": "Library",
+          "x": 9,
+          "y": 0,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 12.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "307",
+          "kind": "stairs",
+          "label": "Stair B",
+          "x": 16,
+          "y": 0,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 18,
+            "width": 1.2
+          }
+        }
+      ]
+    },
+    {
+      "floor": 4,
+      "name": "Research & engineering",
+      "corridor": {
+        "x": 0,
+        "y": 8,
+        "width": 20,
+        "height": 4,
+        "label": "MAIN CORRIDOR"
+      },
+      "rooms": [
+        {
+          "id": "401",
+          "kind": "stairs",
+          "label": "Stair A",
+          "x": 0,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 2,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "402",
+          "kind": "room",
+          "label": "Research lab",
+          "x": 4,
+          "y": 12,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 7.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "403",
+          "kind": "room",
+          "label": "Equipment lab",
+          "x": 11,
+          "y": 12,
+          "width": 5,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 13.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "404",
+          "kind": "restroom",
+          "label": "Restrooms",
+          "x": 16,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 18,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "405",
+          "kind": "room",
+          "label": "Engineering",
+          "x": 0,
+          "y": 0,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 3.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "406",
+          "kind": "room",
+          "label": "Workshop",
+          "x": 7,
+          "y": 0,
+          "width": 9,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 11.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "407",
+          "kind": "stairs",
+          "label": "Stair B",
+          "x": 16,
+          "y": 0,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 18,
+            "width": 1.2
+          }
+        }
+      ]
+    },
+    {
+      "floor": 5,
+      "name": "Administration",
+      "corridor": {
+        "x": 0,
+        "y": 8,
+        "width": 20,
+        "height": 4,
+        "label": "MAIN CORRIDOR"
+      },
+      "rooms": [
+        {
+          "id": "501",
+          "kind": "stairs",
+          "label": "Stair A",
+          "x": 0,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 2,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "502",
+          "kind": "room",
+          "label": "Finance",
+          "x": 4,
+          "y": 12,
+          "width": 6,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 7,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "503",
+          "kind": "room",
+          "label": "Conference",
+          "x": 10,
+          "y": 12,
+          "width": 6,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 13,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "504",
+          "kind": "restroom",
+          "label": "Restrooms",
+          "x": 16,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 18,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "505",
+          "kind": "room",
+          "label": "Administration",
+          "x": 0,
+          "y": 0,
+          "width": 9,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 4.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "506",
+          "kind": "room",
+          "label": "Staff lounge",
+          "x": 9,
+          "y": 0,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 12.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "507",
+          "kind": "stairs",
+          "label": "Stair B",
+          "x": 16,
+          "y": 0,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 18,
+            "width": 1.2
+          }
+        }
+      ]
+    },
+    {
+      "floor": 6,
+      "name": "Operations",
+      "corridor": {
+        "x": 0,
+        "y": 8,
+        "width": 20,
+        "height": 4,
+        "label": "MAIN CORRIDOR"
+      },
+      "rooms": [
+        {
+          "id": "601",
+          "kind": "stairs",
+          "label": "Stair A",
+          "x": 0,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 2,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "602",
+          "kind": "room",
+          "label": "Control room",
+          "x": 4,
+          "y": 12,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 7.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "603",
+          "kind": "room",
+          "label": "Server room",
+          "x": 11,
+          "y": 12,
+          "width": 5,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 13.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "604",
+          "kind": "restroom",
+          "label": "Restrooms",
+          "x": 16,
+          "y": 12,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "south",
+            "x": 18,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "605",
+          "kind": "room",
+          "label": "Operations",
+          "x": 0,
+          "y": 0,
+          "width": 9,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 4.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "606",
+          "kind": "room",
+          "label": "Briefing room",
+          "x": 9,
+          "y": 0,
+          "width": 7,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 12.5,
+            "width": 1.2
+          }
+        },
+        {
+          "id": "607",
+          "kind": "stairs",
+          "label": "Stair B",
+          "x": 16,
+          "y": 0,
+          "width": 4,
+          "height": 8,
+          "door": {
+            "side": "north",
+            "x": 18,
+            "width": 1.2
+          }
+        }
+      ]
+    }
+  ]
+}

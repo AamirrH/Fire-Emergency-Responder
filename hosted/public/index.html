@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10151b"><title>Ember · Fire Command</title>
-  <link rel="stylesheet" href="/styles.css"><script src="/map.js" defer></script><script src="/app.js" defer></script>
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/3d.css"><script src="/map.js" defer></script><script type="module" src="/building3d.js"></script><script src="/app.js" defer></script>
 </head>
 <body>
   <header class="topbar"><a class="brand" href="/" aria-label="Ember fire command"><span class="brand-mark">E</span><span>EMBER <small>FIRE COMMAND</small></span></a><div class="topbar-right"><span id="connection" class="connection">Connecting…</span><button id="share-button">Open on phone</button></div></header>
@@ -27,6 +27,7 @@
       </section>
       <aside class="attention-panel"><div class="attention-heading"><h2>Needs attention</h2><span id="attention-count">—</span></div><div id="attention-list"></div><button id="all-alerts" hidden>Show all alerts</button><div class="unknown-summary"><strong id="unknown-summary-count">— unaccounted</strong><span>No signal received. Location unknown.</span><button id="review-unaccounted">View roster</button></div><div class="qr-card"><img id="station-qr" alt="Scan to open the live dashboard on your phone" hidden><div><strong>Take this view with you</strong><p id="qr-status">Preparing phone link…</p><button id="qr-open">Show QR code</button></div></div></aside>
     </div>
+    <details class="building-3d" id="building-3d"><summary>Open interactive 3-D building view <span>Rotate · zoom · select a floor</span></summary><div class="building-3d-body"><div id="building-3d-canvas" role="img" aria-label="Interactive three-dimensional model of the building"></div><div class="building-3d-help">Drag to rotate · scroll to zoom · click a marker to see the occupant</div><div id="building-3d-selection" class="building-3d-selection" aria-live="polite">Select a marker to identify an occupant.</div></div></details>
     <details class="secondary-panel" id="technical"><summary>Occupant roster & sensor details <span id="updated">Waiting for data</span></summary><div class="table-scroll"><table><thead><tr><th>Occupant</th><th>Status</th><th>Estimated floor / position</th><th>Last signal</th><th>Connected AP</th><th>Match distance</th></tr></thead><tbody id="devices"></tbody></table></div></details>
     <details class="secondary-panel" id="demo-controls" hidden><summary>Demo controls</summary><div class="control-fields"><label>Occupant<select id="device-select"></select></label><div class="button-row"><button data-action="sos" class="danger">Send SOS</button><button data-action="go-silent">Go silent</button><button data-action="evacuate">Confirm safe</button></div><label>Access point<select id="ap-select"></select></label><div class="button-row"><button data-action="ap-down">AP offline</button><button data-action="power-outage">Floor outage</button><button data-action="reset">Reset demo</button></div></div><p id="control-message" role="status">Demo actions apply to every connected view.</p></details>
     <footer><span>Prototype · simulated occupants</span><span id="sync-note">Live incident view</span></footer>

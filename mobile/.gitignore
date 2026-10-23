@@ -1,0 +1,7 @@
+node_modules/
+.expo/
+dist/
+npm-debug.*
+yarn-error.log*
+.DS_Store
+android/app/debug.keystore

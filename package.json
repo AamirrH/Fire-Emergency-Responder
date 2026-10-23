@@ -5,7 +5,9 @@
   "description": "Raw-sensor fire-emergency occupant localization demo",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test"
+    "dev": "node server.js",
+    "test": "node --test",
+    "build:apk": "npm --prefix mobile run build:apk"
   },
   "engines": {
     "node": ">=20"
@@ -14,7 +16,8 @@
     "dotenv": "^18.0.6",
     "express": "^4.21.2",
     "qrcode": "^1.5.4",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "jsqr": "^1.4.0",

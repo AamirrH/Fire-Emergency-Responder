@@ -13,11 +13,13 @@ function element(tag, text, className) { const el = document.createElement(tag);
 async function json(url) { const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(8000) }); if (!response.ok) throw new Error(`Unable to load ${url}`); return response.json(); }
 function setState(next) {
   state = next;
+  window.__emberState = state;
   lastReceived = Date.now();
   // Hosted responses include the server-measured source age, independent of phone clock skew.
   serverAgeAtReceipt = Math.max(0, next.source_age_ms || 0);
   if (!initialSelection) { const first = state.devices.filter(needsAttention).sort(byPriority)[0]; selected = first ? first.floor : 1; initialSelection = true; }
   render();
+  window.dispatchEvent(new CustomEvent('ember-state', { detail: state }));
 }
 function merge(diff) {
   if (!state || diff.revision !== state.revision + 1) { socket.emit('resync'); return; }
@@ -34,12 +36,15 @@ function connection() {
 }
 async function start() {
   try {
+    document.getElementById('building-3d').open = true;
     document.body.classList.toggle('field-view', fieldView);
     runtime = await json('/api/runtime');
     $('demo-controls').hidden = !runtime.can_control || fieldView;
     share = runtime.share;
     setupShare();
     building = await json('/api/building');
+    window.__emberBuilding = building;
+    window.dispatchEvent(new CustomEvent('ember-building', { detail: building }));
     if (runtime.transport === 'socket.io') {
       await new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = '/socket.io/socket.io.js'; script.onload = resolve; script.onerror = reject; document.head.append(script); });
       socket = io('/live'); socket.on('snapshot', setState); socket.on('state_diff', merge);
@@ -65,7 +70,7 @@ function roomDescription(device) {
   return plan ? 'Main corridor · estimated' : `${p.x}, ${p.y} m · estimated`;
 }
 function focusDevice(device) { selected = device.floor; focusedDevice = device.device_id; render(); $('floor-title').scrollIntoView({ block: 'start', behavior: 'smooth' }); }
-function chooseFloor(floor) { selected = floor; focusedDevice = null; render(); }
+function chooseFloor(floor) { selected = floor; focusedDevice = null; render(); window.dispatchEvent(new CustomEvent('ember-selection', { detail: { floor } })); }
 function metricFilter(status) {
   alertFilter = status;
   if (status === 'unaccounted') { selected = null; focusedDevice = null; alertFilter = null; }
@@ -189,4 +194,48 @@ document.querySelectorAll('[data-action]').forEach(button => { button.onclick = 
   button.disabled = true;
   try { const response = await fetch(`/simulate/${action}`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) }); const result = await response.json(); if (!response.ok) throw new Error(result.error); $('control-message').textContent = `${action} applied.${action === 'go-silent' ? ` Signal loss appears after ${building.simulation.heartbeat_timeout_seconds}s.` : ''}`; } catch (error) { $('control-message').textContent = error.message; } finally { button.disabled = false; }
 }; });
+
+// PWA Service Worker & Install Prompt
+let deferredPrompt = null;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+function openDownloadModal() {
+  const modal = $('download-app-modal');
+  if (modal && typeof modal.showModal === 'function' && !modal.open) {
+    modal.showModal();
+  }
+}
+function closeDownloadModal() {
+  const modal = $('download-app-modal');
+  if (modal && typeof modal.close === 'function') {
+    modal.close();
+  }
+}
+
+if ($('topbar-app-btn')) $('topbar-app-btn').onclick = openDownloadModal;
+if ($('close-download-modal')) $('close-download-modal').onclick = closeDownloadModal;
+if ($('dismiss-modal-btn')) $('dismiss-modal-btn').onclick = closeDownloadModal;
+
+if ($('modal-install-pwa')) {
+  $('modal-install-pwa').onclick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice.outcome === 'accepted') closeDownloadModal();
+      deferredPrompt = null;
+    } else {
+      alert('To install the web app, tap your browser menu (⋮ or Share) and select "Add to Home screen" or "Install App".');
+    }
+  };
+}
+
+// Automatically open the download modal upon page load or reload
+setTimeout(openDownloadModal, 500);
+
 setInterval(render,1000); start();

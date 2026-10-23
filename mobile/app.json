@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Ember Responder SOS",
+    "slug": "indoor-fire-localization",
+    "owner": "atifazmis-team",
+    "version": "1.0.0",
+    "sdkVersion": "57.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0c1117",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0c1117"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "icon": "./assets/icon.png",
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0c1117"
+      },
+      "package": "com.anonymous.emberrespondersos",
+      "usesCleartextTraffic": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3f490ab8-bed2-4d32-8c93-43620260c31b"
+      }
+    }
+  }
+}

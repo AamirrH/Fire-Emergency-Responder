@@ -18,18 +18,18 @@ function createApp({ config = defaults, directory = __dirname, clock = Date.now,
   const publisher = new CloudPublisher(cloud);
   const app = express();
   const server = http.createServer(app);
-  const io = new Server(server);
+  const io = new Server(server, { cors: { origin: '*' } });
   const live = io.of('/live');
   let revision = 0;
   let previous;
   let timers = [];
   app.use(express.json({ limit: '32kb' }));
 
-  // CORS for /api/device/* only
-  app.use('/api/device', (req, res, next) => {
+  // CORS for /api/device, /api/building, and /building.json
+  app.use(['/api/device', '/api/building', '/building.json'], (req, res, next) => {
     res.set('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.set('Access-Control-Allow-Headers', 'Content-Type, x-device-token');
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Accept, x-device-token');
     if (req.method === 'OPTIONS') return res.sendStatus(204);
     next();
   });

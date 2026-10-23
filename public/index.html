@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Ember Command">
   <link rel="apple-touch-icon" href="/qr-check.png">
-  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/3d.css"><script src="/map.js" defer></script><script type="module" src="/building3d.js"></script><script src="/app.js" defer></script>
+  <link rel="stylesheet" href="/styles.css"><script src="/map.js" defer></script><script src="/app.js" defer></script>
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="/" aria-label="Ember fire command"><span class="brand-mark">E</span><span>EMBER <small>FIRE COMMAND</small></span></a><div class="topbar-right"><span id="connection" class="connection">Connecting…</span><a href="/ember-responder.apk" id="topbar-apk-link" class="topbar-apk-pill" download="ember-responder-sos.apk" title="Download standalone Android .apk">⬇️ Download APK</a><button id="topbar-app-btn" class="topbar-app-btn">📱 Get Mobile App</button><button id="share-button">Open on phone</button></div></header>
+  <header class="topbar"><a class="brand" href="/" aria-label="Ember fire command"><span class="brand-mark">E</span><span>EMBER <small>FIRE COMMAND</small></span></a><div class="topbar-right"><span id="connection" class="connection">Connecting…</span><button id="share-button">Open on phone</button></div></header>
   <main>
     <div id="stale-banner" class="stale-banner" role="alert" hidden>LIVE FEED LOST — positions may be out of date. Last update <span id="stale-age">—</span>.</div>
     <section class="incident-heading"><div><p class="eyebrow">BUILDING 01 · GROUND-LEVEL COMMAND</p><h1 id="incident-title">Connecting to building…</h1><p id="incident-note">Waiting for live occupant information.</p></div><span class="demo-badge">SIMULATION</span></section>
@@ -32,10 +32,9 @@
       </section>
       <aside class="attention-panel"><div class="attention-heading"><h2>Needs attention</h2><span id="attention-count">—</span></div><div id="attention-list"></div><button id="all-alerts" hidden>Show all alerts</button><div class="unknown-summary"><strong id="unknown-summary-count">— unaccounted</strong><span>No signal received. Location unknown.</span><button id="review-unaccounted">View roster</button></div><div class="qr-card"><img id="station-qr" alt="Scan to open the live dashboard on your phone" hidden><div><strong>Take this view with you</strong><p id="qr-status">Preparing phone link…</p><button id="qr-open">Show QR code</button></div></div></aside>
     </div>
-    <details class="building-3d" id="building-3d"><summary>Open interactive 3-D building view <span>Rotate · zoom · select a floor</span></summary><div class="building-3d-body"><div id="building-3d-canvas" role="img" aria-label="Interactive three-dimensional model of the building"></div><div class="building-3d-help">Drag to rotate · scroll to zoom · click a marker to see the occupant</div><div id="building-3d-selection" class="building-3d-selection" aria-live="polite">Select a marker to identify an occupant.</div></div></details>
     <details class="secondary-panel" id="technical"><summary>Occupant roster & sensor details <span id="updated">Waiting for data</span></summary><div class="table-scroll"><table><thead><tr><th>Occupant</th><th>Status</th><th>Estimated floor / position</th><th>Last signal</th><th>Connected AP</th><th>Match distance</th></tr></thead><tbody id="devices"></tbody></table></div></details>
     <details class="secondary-panel" id="demo-controls" hidden><summary>Demo controls</summary><div class="control-fields"><label>Occupant<select id="device-select"></select></label><div class="button-row"><button data-action="sos" class="danger">Send SOS</button><button data-action="go-silent">Go silent</button><button data-action="evacuate">Confirm safe</button></div><label>Access point<select id="ap-select"></select></label><div class="button-row"><button data-action="ap-down">AP offline</button><button data-action="power-outage">Floor outage</button><button data-action="reset">Reset demo</button></div></div><p id="control-message" role="status">Demo actions apply to every connected view.</p></details>
-    <footer><span>Prototype · simulated occupants</span><span id="sync-note">Live incident view</span></footer>
+    <footer><span>Prototype · simulated sensor data</span><button id="topbar-app-btn" class="topbar-app-btn">Occupant mobile app</button><span id="sync-note">Live incident view</span></footer>
   </main>
   <dialog id="share-dialog" aria-labelledby="share-title"><div class="dialog-heading"><h2 id="share-title">Live view on your phone</h2><button id="close-share" aria-label="Close phone sharing">✕</button></div><p id="share-description">Scan with your phone camera. No app needed.</p><img id="share-qr" alt="QR code for the live dashboard" hidden><a id="share-link" target="_blank" rel="noopener" hidden></a><button id="copy-link" hidden>Copy link</button><p id="share-message" role="status"></p><p class="share-footnote">The command station must stay online to send live updates.</p></dialog>
 
@@ -52,7 +51,7 @@
         </div>
       </div>
       <p class="modal-desc">
-        Install the standalone Android <strong>.APK</strong> or add the Web App directly on your mobile device for real-time tracking, live physics telemetry, and instant SOS alerts.
+        Use the Android app to send simulated sensor readings and SOS alerts. Install this dashboard on a firefighter’s phone to view occupant locations.
       </p>
       <div class="modal-actions">
         <a href="/ember-responder.apk" id="modal-download-apk" class="primary-download-btn" download="ember-responder-sos.apk">
@@ -65,8 +64,8 @@
         <button id="modal-install-pwa" class="secondary-install-btn" type="button">
           <span class="btn-icon">📲</span>
           <div class="btn-text">
-            <strong>Install Web App (PWA)</strong>
-            <small>Add to Home Screen for fast mobile access</small>
+            <strong>Install dashboard shortcut</strong>
+            <small>View the dashboard from your home screen</small>
           </div>
         </button>
       </div>

@@ -1,13 +1,10 @@
 // Ember PWA Service Worker
-const CACHE_NAME = 'ember-cache-v1';
+const CACHE_NAME = 'ember-cache-v2';
 const ASSETS = [
   '/',
   '/styles.css',
-  '/3d.css',
-  '/floorplan.css',
   '/app.js',
   '/map.js',
-  '/building3d.js',
   '/manifest.json'
 ];
 

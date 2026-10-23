@@ -4,6 +4,8 @@ A Node.js + Express + Socket.IO backend and a separate, no-build HTML/CSS/JS das
 
 ## Run
 
+For the Android app and backend together, follow [Run and test the backend with the mobile app](docs/RUN_BACKEND_AND_MOBILE.md). It includes PowerShell commands, phone networking, Expo/APK options, and the heartbeat test sequence.
+
 Node.js 20 or newer is required.
 
 ```sh
@@ -69,7 +71,7 @@ The default dashboard is designed for a ground-level incident command screen. La
 
 The “Open on phone” QR uses a public HTTPS field URL. The hosted field view is read-only and polls the latest signed snapshot from the command station; it shows a stale-feed banner if the station stops publishing. The command station keeps all controls and the simulator. Set `PUBLIC_DASHBOARD_URL` and `PUBLISH_TOKEN` in `.env` to enable publishing. The deployment scaffold is in `hosted/`, with an R2-backed latest snapshot and a static phone client. A successful hosted deployment is required before the QR can be scanned from mobile data; localhost cannot work from a phone outside the computer.
 
-The “Open interactive 3-D building view” panel uses Three.js. Drag to orbit, scroll to zoom, and click a marker to identify the occupant. Room volumes are stacked by floor, alert markers are colored and labeled, and the selected floor filter follows the 2-D command map. The 3-D view is intentionally secondary so it supports orientation without delaying the emergency glance.
+The floor plan fills the available map panel with larger room labels and occupant markers. At tablet widths, floor selection moves above the map to leave more space for it. The dashboard uses only the 2-D floor plan; the 3-D view and its rendering dependency have been removed. On the local dashboard, app downloads are available from “Occupant mobile app” in the footer, without a popup interrupting the incident view on load.
 
 ## Demo scenarios
 

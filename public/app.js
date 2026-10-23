@@ -13,13 +13,11 @@ function element(tag, text, className) { const el = document.createElement(tag);
 async function json(url) { const response = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(8000) }); if (!response.ok) throw new Error(`Unable to load ${url}`); return response.json(); }
 function setState(next) {
   state = next;
-  window.__emberState = state;
   lastReceived = Date.now();
   // Hosted responses include the server-measured source age, independent of phone clock skew.
   serverAgeAtReceipt = Math.max(0, next.source_age_ms || 0);
   if (!initialSelection) { const first = state.devices.filter(needsAttention).sort(byPriority)[0]; selected = first ? first.floor : 1; initialSelection = true; }
   render();
-  window.dispatchEvent(new CustomEvent('ember-state', { detail: state }));
 }
 function merge(diff) {
   if (!state || diff.revision !== state.revision + 1) { socket.emit('resync'); return; }
@@ -36,15 +34,12 @@ function connection() {
 }
 async function start() {
   try {
-    document.getElementById('building-3d').open = true;
     document.body.classList.toggle('field-view', fieldView);
     runtime = await json('/api/runtime');
     $('demo-controls').hidden = !runtime.can_control || fieldView;
     share = runtime.share;
     setupShare();
     building = await json('/api/building');
-    window.__emberBuilding = building;
-    window.dispatchEvent(new CustomEvent('ember-building', { detail: building }));
     if (runtime.transport === 'socket.io') {
       await new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = '/socket.io/socket.io.js'; script.onload = resolve; script.onerror = reject; document.head.append(script); });
       socket = io('/live'); socket.on('snapshot', setState); socket.on('state_diff', merge);
@@ -70,7 +65,7 @@ function roomDescription(device) {
   return plan ? 'Main corridor · estimated' : `${p.x}, ${p.y} m · estimated`;
 }
 function focusDevice(device) { selected = device.floor; focusedDevice = device.device_id; render(); $('floor-title').scrollIntoView({ block: 'start', behavior: 'smooth' }); }
-function chooseFloor(floor) { selected = floor; focusedDevice = null; render(); window.dispatchEvent(new CustomEvent('ember-selection', { detail: { floor } })); }
+function chooseFloor(floor) { selected = floor; focusedDevice = null; render(); }
 function metricFilter(status) {
   alertFilter = status;
   if (status === 'unaccounted') { selected = null; focusedDevice = null; alertFilter = null; }
@@ -235,7 +230,5 @@ if ($('modal-install-pwa')) {
   };
 }
 
-// Automatically open the download modal upon page load or reload
-setTimeout(openDownloadModal, 500);
 
 setInterval(render,1000); start();

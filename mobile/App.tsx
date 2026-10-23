@@ -6,9 +6,10 @@ import {
   StyleSheet,
   StatusBar,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useKeepAwake } from 'expo-keep-awake';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { theme } from './src/theme';
 import { BuildingData } from './src/building';
 import { getItem, setItem, deleteItem, StorageKeys } from './src/storage';
@@ -26,9 +27,16 @@ import { SettingsScreen } from './src/screens/SettingsScreen';
 type AppStep = 'loading' | 'connect' | 'enroll' | 'main';
 type MainTab = 'home' | 'move' | 'settings';
 
-export default function App() {
-  // Keep the device awake while foregrounded
-  useKeepAwake();
+function MainApp() {
+  // Keep the device awake while foregrounded on native platforms
+  useEffect(() => {
+    if (Platform.OS !== 'web') {
+      void activateKeepAwakeAsync();
+      return () => {
+        void deactivateKeepAwake();
+      };
+    }
+  }, []);
 
   const [step, setStep] = useState<AppStep>('loading');
   const [activeTab, setActiveTab] = useState<MainTab>('home');
@@ -217,6 +225,14 @@ export default function App() {
         </View>
       </View>
     </SafeAreaView>
+  );
+}
+
+export default function App() {
+  return (
+    <SafeAreaProvider style={styles.safeContainer}>
+      <MainApp />
+    </SafeAreaProvider>
   );
 }
 

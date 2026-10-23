@@ -15,12 +15,27 @@ import { fetchBuilding } from '../api';
 import { getItem, setItem, StorageKeys } from '../storage';
 import { BuildingData } from '../building';
 
+const CURRENT_PC_IP = '172.26.49.42';
+
+function getDefaultServerUrl(): string {
+  if (Platform.OS === 'web') {
+    if (typeof window !== 'undefined' && window.location?.hostname) {
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'http://localhost:3000';
+      }
+      return `http://${window.location.hostname}:3000`;
+    }
+    return 'http://localhost:3000';
+  }
+  return `http://${CURRENT_PC_IP}:3000`;
+}
+
 interface Props {
   onConnected: (building: BuildingData, serverUrl: string, deviceToken: string) => void;
 }
 
 export function ConnectScreen({ onConnected }: Props) {
-  const [serverUrl, setServerUrl] = useState('http://10.212.53.42:3000');
+  const [serverUrl, setServerUrl] = useState(getDefaultServerUrl);
   const [deviceToken, setDeviceToken] = useState('demo123');
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -31,10 +46,10 @@ export function ConnectScreen({ onConnected }: Props) {
     async function loadSaved() {
       const savedUrl = await getItem(StorageKeys.SERVER_URL);
       const savedToken = await getItem(StorageKeys.DEVICE_TOKEN);
-      if (savedUrl && !savedUrl.includes('10.0.2.2')) {
+      if (savedUrl && !savedUrl.includes('10.0.2.2') && !savedUrl.includes('10.212.53.42')) {
         setServerUrl(savedUrl);
       } else {
-        setServerUrl('http://10.212.53.42:3000');
+        setServerUrl(getDefaultServerUrl());
       }
       if (savedToken) setDeviceToken(savedToken);
     }
@@ -48,8 +63,9 @@ export function ConnectScreen({ onConnected }: Props) {
       return;
     }
 
-    if (serverUrl.includes('10.0.2.2')) {
-      setStatusMessage('10.0.2.2 is only for PC emulators. Tap the quick link above to use your PC IP: http://10.212.53.42:3000');
+    if (serverUrl.includes('10.0.2.2') || serverUrl.includes('10.212.53.42')) {
+      const suggestion = getDefaultServerUrl();
+      setStatusMessage(`Please use your current server address: ${suggestion}`);
       setIsSuccess(false);
       return;
     }
@@ -117,17 +133,27 @@ export function ConnectScreen({ onConnected }: Props) {
             style={styles.input}
             value={serverUrl}
             onChangeText={setServerUrl}
-            placeholder="http://10.212.53.42:3000"
+            placeholder={getDefaultServerUrl()}
             placeholderTextColor={theme.colors.muted}
             autoCapitalize="none"
             autoCorrect={false}
           />
-          <TouchableOpacity
-            style={styles.quickIpButton}
-            onPress={() => setServerUrl('http://10.212.53.42:3000')}
-          >
-            <Text style={styles.quickIpText}>👉 Tap here to fill: http://10.212.53.42:3000</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'column', gap: 6, marginTop: 8 }}>
+            <TouchableOpacity
+              style={styles.quickIpButton}
+              onPress={() => setServerUrl(`http://${CURRENT_PC_IP}:3000`)}
+            >
+              <Text style={styles.quickIpText}>👉 Use PC IP: http://{CURRENT_PC_IP}:3000</Text>
+            </TouchableOpacity>
+            {Platform.OS === 'web' && (
+              <TouchableOpacity
+                style={styles.quickIpButton}
+                onPress={() => setServerUrl('http://localhost:3000')}
+              >
+                <Text style={styles.quickIpText}>👉 Use Localhost: http://localhost:3000</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
 
         {/* Device Token Input */}

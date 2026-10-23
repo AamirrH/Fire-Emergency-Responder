@@ -69,7 +69,7 @@ The default dashboard is designed for a ground-level incident command screen. La
 
 The “Open on phone” QR uses a public HTTPS field URL. The hosted field view is read-only and polls the latest signed snapshot from the command station; it shows a stale-feed banner if the station stops publishing. The command station keeps all controls and the simulator. Set `PUBLIC_DASHBOARD_URL` and `PUBLISH_TOKEN` in `.env` to enable publishing. The deployment scaffold is in `hosted/`, with an R2-backed latest snapshot and a static phone client. A successful hosted deployment is required before the QR can be scanned from mobile data; localhost cannot work from a phone outside the computer.
 
-Project organization: `public/` contains the local dashboard, `hosted/` contains the phone-site bundle, `lib/` contains backend modules, `test/` contains automated checks, `assets/` contains preview and verification images, and `releases/` contains packaged site archives.
+The “Open interactive 3-D building view” panel uses Three.js. Drag to orbit, scroll to zoom, and click a marker to identify the occupant. Room volumes are stacked by floor, alert markers are colored and labeled, and the selected floor filter follows the 2-D command map. The 3-D view is intentionally secondary so it supports orientation without delaying the emergency glance.
 
 ## Demo scenarios
 
@@ -102,6 +102,27 @@ Invoke-RestMethod http://127.0.0.1:3000/simulate/sos -Method Post -ContentType '
 - `GET /api/state`: complete public state, including unlocated devices.
 - `POST /api/heartbeat`: strictly accepts only `device_id`, `raw_pressure`, `raw_rssi`; rejects precomputed floor/position fields and unknown devices/APs. This optional ingress also enables manual raw-sensor experiments.
 - Socket.IO namespace `/live`: connect with `io('/live')`. This is the Socket.IO protocol, not a plain native-WebSocket URL. The client supports WebSocket upgrade and polling fallback. Receive `snapshot` on connection/reset and `state_diff` thereafter. Diffs contain only changed devices/APs plus aggregates, server time, and a monotonically increasing revision. The client merges records by ID, requests `resync` on a revision gap, and receives a fresh snapshot on reconnect.
+
+### Device API (`/api/device/*`)
+
+Used by the "Ember Responder SOS" mobile app. All routes are CORS-enabled from any origin and strictly require the `x-device-token` header matching the server's configured `DEVICE_TOKEN` (rejects with 401 otherwise).
+
+- `POST /api/device/heartbeat`: strictly accepts `{ device_id, raw_pressure, raw_rssi }`. Raw measurements only; backend calculates floor and coordinates.
+- `POST /api/device/sos`: `{"device_id":"D005"}`. Triggers an immediate active SOS event and broadcasts via Socket.IO diff.
+- `POST /api/device/sos-cancel`: `{"device_id":"D005"}`. Cancels an active SOS within the 15-second grace period (`SOS_CANCEL_GRACE_SECONDS`). Returns 400 if expired or not active.
+- `POST /api/device/claim`: `{"device_id":"D005"}`. Marks the roster device as phone-controlled; `Simulator.tick()` stops generating heartbeats for it to avoid duplicate packets.
+- `POST /api/device/release`: `{"device_id":"D005"}`. Returns the device back to the simulator for automated heartbeats.
+- `GET /api/device/:id/status`: returns this device's current computed status, floor, x, y coordinates, match distance in dB, matched AP count, connected AP, and last heartbeat timestamp.
+
+### Environment variables
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `HOST` | `127.0.0.1` | Network interface to bind. Set to `0.0.0.0` for local area network (LAN) phone demos. |
+| `PORT` | `3000` | HTTP and WebSocket listening port. |
+| `DEVICE_TOKEN` | *(empty)* | Secret token required in `x-device-token` header for all `/api/device/*` requests. |
+| `PUBLIC_DASHBOARD_URL` | *(empty)* | Optional HTTPS field mirror URL for cloud publishing. |
+| `PUBLISH_TOKEN` | *(empty)* | Bearer token for cloud publisher updates. |
 
 The static dashboard lives in `public/`, served by Express without bundling. It uses SVG for APs and computed device dots, floor selection, status lists, outage banners, connection state and scenario controls. Overlapping grid estimates use concentric rings instead of fabricated position jitter. No refresh is required. It has no external data or hardware dependencies.
 
